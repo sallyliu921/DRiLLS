@@ -102,7 +102,7 @@ class FPGASession:
         abc_command = 'read ' + self.params['design_file'] + '; '
         abc_command += ';'.join(self.sequence) + '; '
         abc_command += 'write ' + output_design_file + '; '
-        abc_command += 'if -K ' + str(self.params['fpga_mapping']['lut_inputs']) + '; '
+        abc_command += 'if -a -K ' + str(self.params['fpga_mapping']['lut_inputs']) + '; '
         abc_command += 'write ' + output_design_file_mapped + '; '
         abc_command += 'print_stats;'
     

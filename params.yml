@@ -14,8 +14,7 @@ abc_binary: yosys-abc
 yosys_binary: yosys
 
 # path of the design file in one of the accepted formats by ABC
-design_file: design.v
-
+design_file: /data/fzliu/EPFL_benchmarks/random_control/ctrl.v
 # standard cell library mapping
 mapping:
   clock_period: 150   # in pico seconds
@@ -40,6 +39,6 @@ optimizations:
 playground_dir: playground
 
 # agent training parameters
-episodes: 100
-iterations: 50
-model_dir: /tmp/brain/model.ckpt   # must be absolute path
+episodes: 51
+iterations: 25
+model_dir: /data/fzliu/DRiLLS/ckpt/model.ckpt   # must be absolute path

@@ -79,6 +79,14 @@ if __name__ == '__main__':
     elif args.mode == 'optimize':
         log('Starting agent to optimize')
         learner = A2C(options, load_model=True)
-        for _ in range(options['iterations']):
+        # for _ in range(options['iterations']):
             # TODO: iteratively run the optimizer
-            pass
+            # pass
+        start = time.time()
+        total_reward = learner.train_episode()
+        end = time.time()
+        log('Episode: ' +  ' - done with total reward = ' + str(total_reward))
+
+        log('Total Training Run Time ~ ' + str((start - end) / 60) + ' minutes.')
+    
+        # mean_reward = np.mean(all_rewards[-100:])

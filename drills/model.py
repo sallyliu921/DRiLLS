@@ -33,6 +33,8 @@ class Normalizer():
 
     def normalize(self, inputs):
         obs_std = tf.sqrt(self.var)
+
+        obs_std = tf.maximum(obs_std, 1e-5)
         return (inputs - self.mean)/obs_std
     
     def reset(self):
@@ -167,8 +169,20 @@ class A2C:
         
         while not done:
             log('  iteration: ' + str(self.game.iteration))
+
+            # print("Current state:",state)
             action_probability_distribution = self.session.run(self.actor_probs, \
                 feed_dict={self.state_input: state.reshape([1, self.state_size])})
+            
+            if np.any(np.isnan(action_probability_distribution)):
+                num_actions = action_probability_distribution.shape[1]
+                action_probability_distribution = np.ones((1,num_actions)) / num_actions 
+
+            min_prob=1e-6
+            action_probability_distribution = np.maximum(action_probability_distribution, min_prob)
+
+            # print("Action Probabilities: ", action_probability_distribution)
+            # print("shape: ", len(action_probability_distribution.shape))
             action = np.random.choice(range(action_probability_distribution.shape[1]), \
                 p=action_probability_distribution.ravel())
             new_state, reward, done, _ = self.game.step(action)
